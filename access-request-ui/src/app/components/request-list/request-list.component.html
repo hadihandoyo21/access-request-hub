@@ -1,0 +1,32 @@
+<div style="padding: 20px;">
+  <h2>Access Requests</h2>
+  <button routerLink="/create" style="margin-bottom: 15px; padding: 8px 16px;">+ New Request</button>
+  
+  <table border="1" cellPadding="10" style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Requester</th>
+        <th>App / Env / Level</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (req of requests; track req.id) {
+        <tr>
+          <td>{{ req.id }}</td>
+          <td>{{ req.requester }}</td>
+          <td>{{ req.application }} / {{ req.environment }} / {{ req.accessLevel }}</td>
+          <td><strong>{{ req.status }}</strong></td>
+          <td>
+            <button (click)="onApprove(req)" [disabled]="req.status === 'Approved' || req.status === 'Rejected'">Approve</button>
+            <button (click)="onReject(req)" [disabled]="req.status === 'Approved' || req.status === 'Rejected'">Reject</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5">No requests found.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

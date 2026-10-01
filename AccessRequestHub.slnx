@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AccessRequestHub.Api.Tests/AccessRequestHub.Api.Tests.csproj" />
+  <Project Path="AccessRequestHub.Api/AccessRequestHub.Api.csproj" />
+</Solution>

@@ -1,0 +1,40 @@
+<div style="padding: 20px; max-width: 500px;">
+  <h2>Create Access Request</h2>
+  
+  <form [formGroup]="requestForm" (ngSubmit)="onSubmit()" style="display: flex; flex-direction: column; gap: 15px;">
+    
+    <div>
+      <label>Application:</label><br>
+      <input formControlName="application" type="text" style="width: 100%; padding: 8px;">
+    </div>
+
+    <div>
+      <label>Environment:</label><br>
+      <select formControlName="environment" style="width: 100%; padding: 8px;">
+        <option value="Development">Development</option>
+        <option value="Staging">Staging</option>
+        <option value="Production">Production</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Access Level:</label><br>
+      <select formControlName="accessLevel" style="width: 100%; padding: 8px;">
+        <option value="Read">Read</option>
+        <option value="Write">Write</option>
+        <option value="Admin">Admin</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Justification:</label><br>
+      <textarea formControlName="justification" rows="4" style="width: 100%; padding: 8px;"></textarea>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="requestForm.invalid" style="padding: 10px 20px; margin-right: 10px;">Submit</button>
+      <button type="button" routerLink="/requests" style="padding: 10px 20px;">Cancel</button>
+    </div>
+
+  </form>
+</div>
