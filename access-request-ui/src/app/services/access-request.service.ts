@@ -20,7 +20,6 @@ export class AccessRequestService {
   private userService = inject(UserService);
   private baseUrl = 'http://localhost:5020/api/requests';
 
-  // Helper to attach the X-Mock-User header based on current dropdown selection
   private getOptions() {
     return {
       headers: new HttpHeaders({

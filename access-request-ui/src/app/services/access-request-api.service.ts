@@ -8,7 +8,7 @@ import { AccessRequest, CreateRequestDto, ApproveRequestDto, RejectRequestDto } 
 })
 export class AccessRequestApiService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://localhost:715x/api/requests'; // Update with your actual API port
+  private apiUrl = 'https://localhost:715x/api/requests'; 
 
   getRequests(): Observable<AccessRequest[]> {
     return this.http.get<AccessRequest[]>(this.apiUrl);

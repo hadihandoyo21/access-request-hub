@@ -29,7 +29,6 @@ export class CreateRequestComponent {
   onSubmit(): void {
     if (this.requestForm.invalid) return;
 
-    // Generate Idempotency Key
     const requestPayload = {
       ...this.requestForm.value,
       clientRequestId: crypto.randomUUID() 

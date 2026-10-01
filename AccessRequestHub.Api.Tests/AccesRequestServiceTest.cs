@@ -14,7 +14,7 @@ public class AccessRequestServiceTests
 {
     var options = new DbContextOptionsBuilder<AppDbContext>()
         .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-        .ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning)) // <-- Add this line
+        .ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning)) 
         .Options;
 
     return new AppDbContext(options);
@@ -32,7 +32,6 @@ public class AccessRequestServiceTests
         var (stdReq, _) = await service.CreateRequestAsync(standardDto, "alice@example.local");
         var (hrReq, _) = await service.CreateRequestAsync(highRiskDto, "alice@example.local");
 
-        // Pass Version directly into the constructor
         var stdResult = await service.ApproveRequestAsync(stdReq.Id, new ApproveRequestDto(stdReq.Version), "bob@example.local");
         var hrResult = await service.ApproveRequestAsync(hrReq.Id, new ApproveRequestDto(hrReq.Version), "bob@example.local");
         var hrUpdated = await context.AccessRequests.FindAsync(hrReq.Id);
@@ -73,7 +72,6 @@ public class AccessRequestServiceTests
         var (request, _) = await service.CreateRequestAsync(dto, "alice@example.local");
         var staleVersion = request.Version;
 
-        // Pass Version directly into the constructor
         await service.ApproveRequestAsync(request.Id, new ApproveRequestDto(staleVersion), "bob@example.local");
         var conflictResult = await service.ApproveRequestAsync(request.Id, new ApproveRequestDto(staleVersion), "bob@example.local");
 
@@ -89,7 +87,6 @@ public class AccessRequestServiceTests
         var dto = new CreateRequestDto(Guid.NewGuid(), "CRM", "NonProduction", "Read", "Rejection Test");
         var (request, _) = await service.CreateRequestAsync(dto, "alice@example.local");
 
-        // Pass Version and Reason directly into the constructor (assuming RejectRequestDto(Guid Version, string Reason))
         var result = await service.RejectRequestAsync(request.Id, new RejectRequestDto(request.Version, "   "), "bob@example.local");
 
         Assert.Equal("ReasonRequired", result);

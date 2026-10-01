@@ -64,13 +64,11 @@ public async Task<IActionResult> Create([FromBody] CreateRequestDto dto)
             return NotFound(new { message = "Request not found." });
         }
 
-        // 1. Check Terminal State
         if (accessRequest.Status == "Approved" || accessRequest.Status == "Rejected")
         {
             return BadRequest(new { message = "Cannot modify requests in a terminal state." });
         }
 
-        // 2. Role-Based & State-Based Validation
         if (actor.Role == "Requester")
         {
             return StatusCode(403, new { message = "Authorization Error: Requesters cannot approve access requests." });
@@ -134,13 +132,11 @@ public async Task<IActionResult> Create([FromBody] CreateRequestDto dto)
             return NotFound(new { message = "Request not found." });
         }
 
-        // 1. Check Terminal State
         if (accessRequest.Status == "Approved" || accessRequest.Status == "Rejected")
         {
             return BadRequest(new { message = "Cannot modify requests in a terminal state." });
         }
 
-        // 2. Role-Based & State-Based Validation
         if (actor.Role == "Requester")
         {
             return StatusCode(403, new { message = "Authorization Error: Requesters cannot reject access requests." });

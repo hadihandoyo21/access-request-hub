@@ -75,13 +75,11 @@ public class AccessRequestService
         var request = await _context.AccessRequests.FindAsync(id);
         if (request == null) return "NotFound";
 
-        // Concurrency Check (comparing Guids)
         if (request.Version != dto.Version) return "Conflict";
 
         string previousStatus = request.Status;
         string newStatus = previousStatus;
 
-        // Workflow Routing
         if (previousStatus == "PendingManager")
         {
             bool isHighRisk = request.Environment == "Production" || request.AccessLevel == "Admin";
@@ -97,7 +95,7 @@ public class AccessRequestService
         }
 
         request.Status = newStatus;
-        request.Version = Guid.NewGuid(); // Refresh concurrency token
+        request.Version = Guid.NewGuid(); 
 
         var auditLog = new AuditLog
         {
@@ -125,20 +123,19 @@ public class AccessRequestService
         var request = await _context.AccessRequests.FindAsync(id);
         if (request == null) return "NotFound";
 
-        // Concurrency Check (comparing Guids)
         if (request.Version != dto.Version) return "Conflict";
 
         if (string.IsNullOrWhiteSpace(dto.Reason)) return "ReasonRequired";
 
         request.Status = "Rejected";
-        request.Version = Guid.NewGuid(); // Refresh concurrency token
+        request.Version = Guid.NewGuid(); 
 
         var auditLog = new AuditLog
         {
             RequestId = request.Id,
             ActorEmail = actorEmail,
             ActionType = "Rejected",
-            Reason = dto.Reason.Trim(), // Maps to your Reason property
+            Reason = dto.Reason.Trim(), 
             Timestamp = DateTime.UtcNow
         };
 
